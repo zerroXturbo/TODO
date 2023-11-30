@@ -14,9 +14,13 @@ addButton.addEventListener("click", function(){
         addMessage.placeholder = "Вы не ввели свою цель:(";
         return;
     }
+    if (addMessage.value.length > 28){
+        addMessage.value = "Слишком много букв...";
+        return
+    }
 
     let newTodo = {
-        numberId: todoList.length,
+        numberId: Math.random(),
         todo: addMessage.value,
         checked: false
     }
@@ -46,17 +50,16 @@ function displayMessages(){
         <li>
             <input type="checkbox" id="item_${i}" ${item.checked ? "checked" : ""}>
             <label for="item_${i}">${item.todo}</label>
-            <input type="button" id="item_${item.numberId}" class="delete" value="❌">
+            <input type="button" id="${item.numberId}" class="delete" value="❌">
         </li>
         `;
         todo.innerHTML = displayMessages;
         var current_task = document.querySelectorAll(".delete");
         for(var i=0; i<current_task.length; i++){
-            current_task[i].addEventListener("click", function(event){
+            current_task[i].addEventListener("click", function(){
                 let itemId = this.getAttribute("id");
                 todoList.forEach(function(item, i){
-                    if (item.numberId === Number(itemId.at(-1))){
-                        console.log("yes");
+                    if (Number(item.numberId) === Number(itemId)){
                         todoList.splice(i, 1);
                         localStorage.setItem("todo", JSON.stringify(todoList));
                     }
@@ -65,5 +68,4 @@ function displayMessages(){
             })
         }
     })
-   
 }
