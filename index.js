@@ -28,6 +28,8 @@ addButton.addEventListener("click", function(){
     todoList.push(newTodo);
     displayMessages();
     localStorage.setItem("todo", JSON.stringify(todoList));
+    addMessage.placeholder = "Введите свою цель!";
+    addMessage.value = "";
 });
 
 todo.addEventListener("change", function(event){
